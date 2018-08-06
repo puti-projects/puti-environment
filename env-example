@@ -1,0 +1,25 @@
+### Paths #################################################
+# Choose storage path on your machine
+DATA_PATH_HOST=./data
+
+
+### Drivers ################################################
+# All volumes driver
+VOLUMES_DRIVER=local
+# All Networks driver
+NETWORKS_DRIVER=bridge
+
+
+### WORKSPACE #############################################
+WORKSPACE_TIMEZONE=Asia/Shanghai
+
+
+### MYSQL #################################################
+MYSQL_VERSION=latest
+MYSQL_DATABASE=db_puti
+MYSQL_USER=putiroot
+MYSQL_PASSWORD=puti123456
+MYSQL_PORT=3306
+MYSQL_ROOT_PASSWORD=123456
+# If the DATA_PATH_HOST/mysql is empty, the container will init the database using these sql file
+MYSQL_ENTRYPOINT_INITDB=./mysql/docker-entrypoint-initdb.d

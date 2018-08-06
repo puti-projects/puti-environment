@@ -1,2 +1,9 @@
 # puti-environment
-Puti environment solution for
+Puti environment solution
+
+## Requirements
+- Docker
+- Docker-compose
+- Git
+
+## Usage
