@@ -3,7 +3,6 @@ FROM mysql:${MYSQL_VERSION}
 
 LABEL maintainer="goozp <gzp@goozp.com>"
 
-
 # Set Timezone
 ARG TZ=UTC
 ENV TZ ${TZ}

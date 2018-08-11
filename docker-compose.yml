@@ -16,14 +16,32 @@ services:
       volumes:
         - ${DATA_PATH_HOST}/mysql:/var/lib/mysql
         - ${MYSQL_ENTRYPOINT_INITDB}:/docker-entrypoint-initdb.d
+        - ${MYSQL_HOST_LOG_PATH}:/var/lib/mysql-logs
       ports:
         - "${MYSQL_PORT}:3306"
       restart: always
       networks:
-        - backend
+        - web
+
+    nginx:
+      container_name: nginx
+      build: 
+        context: ./nginx
+      environment:
+        - TZ=${WORKSPACE_TIMEZONE}
+      volumes:
+        - ${NGINX_CONFD_PATH}:/etc/nginx/conf.d
+        - ${NGINX_HOST_LOG_PATH}:/var/log/nginx
+      ports:
+        - "${NGINX_HOST_HTTP_PORT}:80"
+        - "${NGINX_HOST_HTTPS_PORT}:443"
+      restart: always
+      networks:
+        - web
+
 
 networks:
-  backend:
+  web:
     driver: ${NETWORKS_DRIVER}
 
 volumes:
