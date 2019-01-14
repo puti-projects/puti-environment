@@ -1,43 +1,68 @@
-version: '3'
+version: "3"
 
 services:
-    mysql:
-      container_name: mysql
-      build:
-        context: ./mysql
-        args:
-          - MYSQL_VERSION=${MYSQL_VERSION}
-      environment:
-        - MYSQL_DATABASE=${MYSQL_DATABASE}
-        - MYSQL_USER=${MYSQL_USER}
-        - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-        - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-        - TZ=${WORKSPACE_TIMEZONE}
-      volumes:
-        - ${DATA_PATH_HOST}/mysql:/var/lib/mysql
-        - ${MYSQL_ENTRYPOINT_INITDB}:/docker-entrypoint-initdb.d
-        - ${MYSQL_HOST_LOG_PATH}:/var/lib/mysql-logs
-      ports:
-        - "${MYSQL_PORT}:3306"
-      restart: always
-      networks:
-        - web
+  mysql:
+    container_name: puti-db
+    build:
+      context: ./mysql
+      args:
+        - MYSQL_VERSION=${MYSQL_VERSION}
+    environment:
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - TZ=${WORKSPACE_TIMEZONE}
+    volumes:
+      - ${DATA_PATH_HOST}/mysql:/var/lib/mysql
+      - ${MYSQL_ENTRYPOINT_INITDB}:/docker-entrypoint-initdb.d
+      - ${MYSQL_HOST_LOG_PATH}:/var/lib/mysql-logs
+    ports:
+      - "${MYSQL_PORT}:3306"
+    restart: always
+    networks:
+      - web
 
-    nginx:
-      container_name: nginx
-      build: 
-        context: ./nginx
-      environment:
-        - TZ=${WORKSPACE_TIMEZONE}
-      volumes:
-        - ${NGINX_CONFD_PATH}:/etc/nginx/conf.d
-        - ${NGINX_HOST_LOG_PATH}:/var/log/nginx
-      ports:
-        - "${NGINX_HOST_HTTP_PORT}:80"
-        - "${NGINX_HOST_HTTPS_PORT}:443"
-      restart: always
-      networks:
-        - web
+  nginx:
+    container_name: puti-nginx
+    build: 
+      context: ./nginx
+      args:
+        - NGINX_VERSION=${NGINX_VERSION}
+    environment:
+      - TZ=${WORKSPACE_TIMEZONE}
+    volumes:
+      - ${NGINX_CONF_PATH}:/etc/nginx/nginx.conf
+      - ${NGINX_CONFD_PATH}:/etc/nginx/conf.d
+      - ${NGINX_HOST_LOG_PATH}:/var/log/nginx
+      - ${NGINX_CERT_PATH}:/etc/nginx/certs
+    ports:
+      - "${NGINX_HOST_HTTP_PORT}:80"
+      - "${NGINX_HOST_HTTPS_PORT}:443"
+    restart: always
+    networks:
+      - web
+
+  puti:
+    container_name: puti
+    build:
+      context: ./app/puti
+      args:
+        - GOLANG_BUILDER_VERSION=${GOLANG_BUILDER_VERSION}
+    depends_on:
+      - mysql
+    volumes:
+      - ${PUTI_LOG_PATH}:/puti/logs
+      - ${PUTI_CONFIG_PATH}:/puti/configs
+      - ${PUTI_THEME_PATH}:/puti/theme
+      - ${PUTI_UPLOAD_PATH}:/puti/uploads
+    ports:
+      - "${PUTI_HTTP_PORT}:8000"
+      - "${PUTI_HTTPS_PORT}:8080"
+    restart: always
+    networks:
+      - web
+
 
 
 networks:
@@ -46,4 +71,6 @@ networks:
 
 volumes:
   mysql:
+    driver: ${VOLUMES_DRIVER}
+  puti:
     driver: ${VOLUMES_DRIVER}
