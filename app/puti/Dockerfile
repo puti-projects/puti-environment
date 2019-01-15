@@ -31,7 +31,7 @@ COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 COPY --from=builder /etc/passwd /etc/passwd
 
 # Copy our static executable.
-COPY --from=builder /data/puti/puti /puti/puti
+COPY --from=builder /data/puti/puti /puti/
 COPY --from=builder /data/puti/configs /puti/configs
 COPY --from=builder /data/puti/assets /puti/assets
 COPY --from=builder /data/puti/theme /puti/theme
@@ -39,7 +39,8 @@ COPY --from=builder /data/puti/theme /puti/theme
 # Use an unprivileged user.
 USER putiuser
 
-EXPOSE 8000 8080
+WORKDIR /puti
 
+EXPOSE 8000 8080
 # Run the puti binary.
-CMD ["/puti/puti"]
+CMD ["./puti"]
