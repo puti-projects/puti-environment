@@ -18,9 +18,10 @@ WORKSPACE_TIMEZONE=Asia/Shanghai
 GOLANG_BUILDER_VERSION=alpine
 PUTI_HTTP_PORT=8000
 PUTI_HTTPS_PORT=8080
-NGINX_LOG_PATH=./logs/puti
-NGINX_THEME_PATH=./data/puti/theme
-NGINX_UPLOAD_PATH=./data/puti/upload
+PUTI_LOG_PATH=./logs/puti
+PUTI_CONFIG_PATH=./data/puti/configs
+PUTI_THEME_PATH=./data/puti/theme
+PUTI_UPLOAD_PATH=./data/puti/upload
 
 
 ### MYSQL #################################################

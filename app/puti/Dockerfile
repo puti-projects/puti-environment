@@ -5,14 +5,12 @@ ARG GOLANG_BUILDER_VERSION=alpine
 FROM golang:${GOLANG_BUILDER_VERSION} AS builder
 
 RUN apk update && apk add --no-cache build-base git tzdata && update-ca-certificates
-# Create putiuser.
-RUN adduser -D -g '' putiuser
 
 WORKDIR /data
 RUN wget -O puti.zip https://github.com/puti-projects/puti/archive/master.zip && \
     unzip puti.zip && \
     mv puti-master puti && \ 
-    chmod +x puti && \
+    chmod -R 777 puti && \
     rm -f puti.zip
 
 WORKDIR /data/puti
@@ -28,16 +26,12 @@ FROM scratch
 # Import from the builder.
 COPY --from=builder /usr/share/zoneinfo /usr/share/zoneinfo
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
-COPY --from=builder /etc/passwd /etc/passwd
 
 # Copy our static executable.
 COPY --from=builder /data/puti/puti /puti/
 COPY --from=builder /data/puti/configs /puti/configs
 COPY --from=builder /data/puti/assets /puti/assets
 COPY --from=builder /data/puti/theme /puti/theme
-
-# Use an unprivileged user.
-USER putiuser
 
 WORKDIR /puti
 
