@@ -67,9 +67,7 @@ services:
       - db
 
 
-
 networks:
   web:
-    driver: ${NETWORKS_DRIVER}
   db:
-    driver: ${NETWORKS_DRIVER}
+    
