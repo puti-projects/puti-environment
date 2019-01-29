@@ -1,7 +1,7 @@
 version: "3"
 
 services:
-  mysql:
+  database:
     container_name: puti-db
     build:
       context: ./mysql
@@ -16,12 +16,12 @@ services:
     volumes:
       - ${DATA_PATH_HOST}/mysql:/var/lib/mysql
       - ${MYSQL_ENTRYPOINT_INITDB}:/docker-entrypoint-initdb.d
-      - ${MYSQL_HOST_LOG_PATH}:/var/lib/mysql-logs
+      - ${MYSQL_HOST_LOG_PATH}:/var/log/mysql
     ports:
       - "${MYSQL_PORT}:3306"
     restart: always
     networks:
-      - web
+      - db
 
   nginx:
     container_name: puti-nginx
@@ -29,6 +29,8 @@ services:
       context: ./nginx
       args:
         - NGINX_VERSION=${NGINX_VERSION}
+    depends_on:
+      - puti
     environment:
       - TZ=${WORKSPACE_TIMEZONE}
     volumes:
@@ -50,11 +52,11 @@ services:
       args:
         - GOLANG_BUILDER_VERSION=${GOLANG_BUILDER_VERSION}
     depends_on:
-      - mysql
+      - database
     volumes:
-      - ${PUTI_LOG_PATH}:/puti/logs
       - ${PUTI_CONFIG_PATH}:/puti/configs
       - ${PUTI_THEME_PATH}:/puti/theme
+      - ${PUTI_LOG_PATH}:/puti/logs
       - ${PUTI_UPLOAD_PATH}:/puti/uploads
     ports:
       - "${PUTI_HTTP_PORT}:8000"
@@ -62,15 +64,12 @@ services:
     restart: always
     networks:
       - web
+      - db
 
 
 
 networks:
   web:
     driver: ${NETWORKS_DRIVER}
-
-volumes:
-  mysql:
-    driver: ${VOLUMES_DRIVER}
-  puti:
-    driver: ${VOLUMES_DRIVER}
+  db:
+    driver: ${NETWORKS_DRIVER}
