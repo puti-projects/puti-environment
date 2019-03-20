@@ -63,11 +63,11 @@ services:
       - "${PUTI_HTTPS_PORT}:8080"
     restart: always
     networks:
-      - web
       - db
+      - web
 
 
 networks:
-  web:
   db:
+  web:
     
