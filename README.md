@@ -1,5 +1,6 @@
 # puti-environment
-Puti environment solution
+Puti environment solution   
+非拉取镜像的本地构建分支。
 
 ## Requirements
 - Docker
@@ -16,16 +17,14 @@ git clone https://github.com/puti-projects/puti-environment.git
 ```
 或者下载 zip 压缩包也可以。
 ### 3. 下载 Puti 项目，生成配置文件
-TODO: 后续改为自动下载最新版本
 ```
 cd puti-environment
 cp env-example .env
 
 cd app
 git clone https://github.com/puti-projects/puti.git
-cp puti/configs/config.yaml.example puti/configs/config.yaml
 ```
-.env 为 puti-environment 项目搭建环境的配置，puti/configs/config.yaml 为 Puti 项目本身的配置，自行修改配置。
+.env 为 puti-environment 项目搭建环境的配置，自行修改配置。
 
 ### 4.docker-compose 构建项目并运行服务
 进入 docker-compose.yml 所在目录：
