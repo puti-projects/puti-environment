@@ -47,10 +47,7 @@ services:
 
   puti:
     container_name: puti
-    build:
-      context: ./app/puti
-      args:
-        - GOLANG_BUILDER_VERSION=${GOLANG_BUILDER_VERSION}
+    image: puti/puti:test
     depends_on:
       - database
     volumes:
