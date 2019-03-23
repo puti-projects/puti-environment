@@ -15,14 +15,11 @@ WORKSPACE_TIMEZONE=Asia/Shanghai
 
 
 ### PUTI  #################################################
-GOLANG_BUILDER_VERSION=1.11-alpine
+GOLANG_BUILDER_VERSION=1.12-alpine
 PUTI_HTTP_PORT=8000
 PUTI_HTTPS_PORT=8080
 PUTI_LOG_PATH=./logs/puti
-PUTI_UPLOAD_PATH=./data/puti/uploads
-PUTI_CONFIG_PATH=./app/puti/configs
-PUTI_THEME_PATH=./app/puti/theme
-
+PUTI_DATA_PATH=./data/puti/
 
 
 ### MYSQL #################################################

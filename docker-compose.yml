@@ -54,10 +54,8 @@ services:
     depends_on:
       - database
     volumes:
-      - ${PUTI_CONFIG_PATH}:/puti/configs
-      - ${PUTI_THEME_PATH}:/puti/theme
-      - ${PUTI_LOG_PATH}:/puti/logs
-      - ${PUTI_UPLOAD_PATH}:/puti/uploads
+      - ${PUTI_DATA_PATH}:/data/puti
+      - ${PUTI_LOG_PATH}:/data/logs/puti
     ports:
       - "${PUTI_HTTP_PORT}:8000"
       - "${PUTI_HTTPS_PORT}:8080"
@@ -65,7 +63,8 @@ services:
     networks:
       - db
       - web
-
+    entrypoint: ["/usr/local/bin/wait-for-db.sh", "database:3306", "--", "docker-entrypoint.sh"]
+    command: ["puti"]
 
 networks:
   db:
