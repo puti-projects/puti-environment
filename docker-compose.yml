@@ -47,7 +47,7 @@ services:
 
   puti:
     container_name: puti
-    image: puti/puti:test
+    image: puti/puti:${PUTI_VERSION}
     depends_on:
       - database
     volumes:

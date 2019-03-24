@@ -15,6 +15,7 @@ WORKSPACE_TIMEZONE=Asia/Shanghai
 
 
 ### PUTI  #################################################
+PUTI_VERSION=test
 PUTI_HTTP_PORT=8000
 PUTI_HTTPS_PORT=8080
 PUTI_LOG_PATH=./logs/puti
