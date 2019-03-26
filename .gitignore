@@ -7,3 +7,6 @@ data/
 logs/
 
 .env
+
+/nginx/conf.d/*
+!/nginx/conf.d/*.example
