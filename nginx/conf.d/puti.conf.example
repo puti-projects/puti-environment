@@ -1,0 +1,50 @@
+server {
+    listen       80;
+    server_name  demo.goozp.com;
+    return       301 https://demo.goozp.com$request_uri;
+}
+
+server {
+    listen 443 ssl http2 default_server;
+    server_name demo.goozp.com;
+    server_tokens        off;
+
+    ssl_certificate   /etc/nginx/certs/www.goozp.pem;
+    ssl_certificate_key  /etc/nginx/certs/www.goozp.key;
+
+    ssl_stapling on;
+    ssl_stapling_verify on;
+
+    ssl_session_tickets on;
+    ssl_session_cache          shared:SSL:50m;
+    ssl_session_timeout        1d;
+
+	ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+    ssl_ciphers EECDH+ECDSA+AESGCM:EECDH+aRSA+AESGCM:EECDH+ECDSA+SHA256:EECDH+aRSA+SHA256:EECDH+ECDSA+SHA384:EECDH+ECDSA+SHA256:EECDH+aRSA+SHA384:EDH+aRSA+AESGCM:EDH+aRSA+SHA256:EDH+aRSA:EECDH:!aNULL:!eNULL:!MEDIUM:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED;
+    ssl_prefer_server_ciphers on;
+        
+    add_header X-Frame-Options SAMEORIGIN;
+    add_header X-Content-Type-Options nosniff;
+    add_header X-Xss-Protection "1; mode=block";
+    add_header Strict-Transport-Security "max-age=31536000; includeSubdomains; preload";
+    add_header Content-Security-Policy "frame-ancestors 'none'";
+    # add_header Content-Security-Policy "default-src https: blob: data:; script-src https: 'unsafe-inline'; style-src https: 'unsafe-inline'"; 
+    # add_header Public-Key-Pins 'pin-sha256="GI75anSEdkuHj05mreE0Sd9jE6dVqUIzzXRHHlZBVbI="; pin-sha256="r/mIkG3eEpVdm+u/ko/cwxzOMo1bk4TyHIlByibiA5E=";  pin-sha256="C5+lpZ7tcVwmwQIMcRtPbsQtWLABXhQzejna0wHFr8M="; max-age=5184000; includeSubDomains' always;
+
+    proxy_ignore_headers     Set-Cookie;
+    proxy_hide_header X-Powered-By;
+
+    charset utf-8;
+    client_max_body_size 100M;
+    fastcgi_read_timeout 1800;
+
+    location / {
+        proxy_pass http://puti:8000;
+        proxy_redirect  default;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Connection "";
+    }
+}
