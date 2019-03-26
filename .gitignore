@@ -8,5 +8,6 @@ logs/
 
 .env
 
+/nginx/certs/*
 /nginx/conf.d/*
 !/nginx/conf.d/*.example

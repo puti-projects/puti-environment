@@ -9,8 +9,8 @@ server {
     server_name demo.goozp.com;
     server_tokens        off;
 
-    ssl_certificate   /etc/nginx/certs/www.goozp.pem;
-    ssl_certificate_key  /etc/nginx/certs/www.goozp.key;
+    ssl_certificate   /etc/nginx/certs/demo.goozp.pem;
+    ssl_certificate_key  /etc/nginx/certs/demo.goozp.key;
 
     ssl_stapling on;
     ssl_stapling_verify on;
