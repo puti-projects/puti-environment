@@ -22,6 +22,10 @@ services:
     restart: always
     networks:
       - db
+    # this entrypoint and command can rewrite by entrypoint script
+    entrypoint: ""
+    command: bash -c "chown -R mysql:mysql /var/log/mysql && exec /entrypoint.sh mysqld"
+
 
   nginx:
     container_name: puti-nginx
