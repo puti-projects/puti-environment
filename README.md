@@ -1,19 +1,24 @@
 # puti-environment
+
 Puti environment solution
 
 ## Requirements
+
 - Docker
 - Docker-compose
 - Git
 
 ## Usage
-### 1. 安装 Docker，Docker-compose，Git 
+
+### 1. 安装 Docker，Docker-compose，Git
 
 ### 2. 下载 puti-environment
+
 直接 clone：
 ```
 git clone https://github.com/puti-projects/puti-environment.git
 ```
+
 或者下载 zip 压缩包也可以。
 
 ### 3. 生成配置文件
@@ -22,20 +27,45 @@ cd puti-environment
 cp env-example .env
 
 ```
-.env 为 puti-environment 项目搭建环境的配置
+.env 为 puti-environment 项目搭建环境的配置，修改为你希望的配置即可。
 
-### 4.docker-compose 构建项目并运行服务
-进入 docker-compose.yml 所在目录：
+### 4. docker-compose 构建项目并运行服务
+进入 Puti-environment 根目录 （docker-compose.yml 所在目录）：
 执行命令：
 ```
 docker-compose up
 ```  
 
-如果没问题，下次启动时可以以守护模式启用，所有容器将后台运行：  
+再次启动时可以以守护模式启用，所有容器将后台运行：  
 ```
 docker-compose up -d
 ``` 
-关闭容器并删除服务：
+关闭并删除容器：
 ```
 docker-compose down
+```
+
+停止、启动、重启容器：
+```
+docker-compose stop
+docker-compose start
+docker-compose restart
+```
+
+## Update
+如何更新呢？如果是更新 Puti-environment 脚本的话，直接 `git pull` 拉取最近的代码就可以了.
+
+更新到最新的 Puti 版本，只需要拉取最新的 Puti 镜像：
+```
+# 拉取最新版本
+docker pull puti/puti
+# 拉取指定版本 
+docker pull puti/puti:v0.1.0
+```
+每发布一个新版本 release，我们都会维护一个版本对应的镜像，而latest 对应当前 master 分支。
+
+然后重新构建就可以了：
+```
+docker-compose down
+docker-compose up -d --build
 ```
