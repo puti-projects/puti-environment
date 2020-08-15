@@ -5,8 +5,9 @@ LABEL maintainer="goozp <gzp@goozp.com>"
 
 COPY nginx.conf /etc/nginx/
 
-RUN addgroup -g 1000 -S www-data \
- && adduser -u 1000 -D -S -G www-data www-data
+RUN adduser -u 1000 -D -S www-data -G www-data
+
+
 
 # Set Timezone
 ARG TZ=UTC
