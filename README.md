@@ -10,9 +10,14 @@ Puti environment solution
 
 ## Usage
 
-### 1. 安装 Docker，Docker-compose，Git
+### 1. 分支说明
+主分支（master）已经移除了 Nginx，现在只包含 Puti 和 一个 DB 容器构建。
 
-### 2. 下载 puti-environment
+包含 Nginx 的移到了 `nginx` 分支。
+
+### 2. 安装 Docker，Docker-compose，Git
+
+### 3. 下载 puti-environment
 
 直接 clone：
 
@@ -22,7 +27,7 @@ git clone https://github.com/puti-projects/puti-environment.git
 
 或者下载 zip 压缩包也可以。
 
-### 3. 生成配置文件
+### 4. 生成配置文件
 
 ```sh
 cd puti-environment
@@ -31,7 +36,7 @@ cp env-example .env
 
 .env 为 puti-environment 项目搭建环境的配置，修改为你希望的配置即可。
 
-### 4. docker-compose 构建项目并运行服务
+### 5. docker-compose 构建项目并运行服务
 
 进入 Puti-environment 根目录 （docker-compose.yml 所在目录）：
 执行命令：

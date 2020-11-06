@@ -14,9 +14,9 @@ services:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - TZ=${WORKSPACE_TIMEZONE}
     volumes:
-      - ${DATA_PATH_HOST}/mysql:/var/lib/mysql
+      - ${PUTI_ROOT}${MYSQL_DATA_PATH}:/var/lib/mysql
       - ${MYSQL_ENTRYPOINT_INITDB}:/docker-entrypoint-initdb.d
-      - ${MYSQL_HOST_LOG_PATH}:/var/log/mysql
+      - ${PUTI_ROOT}${MYSQL_LOG_PATH}:/var/log/mysql
     ports:
       - "${MYSQL_PORT}:3306"
     restart: always
@@ -26,48 +26,22 @@ services:
     entrypoint: ""
     command: bash -c "chown -R mysql:mysql /var/log/mysql && exec /entrypoint.sh mysqld"
 
-
-  nginx:
-    container_name: puti-nginx
-    build: 
-      context: ./nginx
-      args:
-        - NGINX_VERSION=${NGINX_VERSION}
-    depends_on:
-      - puti
-    environment:
-      - TZ=${WORKSPACE_TIMEZONE}
-    volumes:
-      - ${NGINX_CONF_PATH}:/etc/nginx/nginx.conf
-      - ${NGINX_CONFD_PATH}:/etc/nginx/conf.d
-      - ${NGINX_HOST_LOG_PATH}:/var/log/nginx
-      - ${NGINX_CERT_PATH}:/etc/nginx/certs
-    ports:
-      - "${NGINX_HOST_HTTP_PORT}:80"
-      - "${NGINX_HOST_HTTPS_PORT}:443"
-    restart: always
-    networks:
-      - web
-
   puti:
     container_name: puti
     image: puti/puti:${PUTI_VERSION}
     depends_on:
       - database
     volumes:
-      - ${PUTI_DATA_PATH}:/data/puti
-      - ${PUTI_LOG_PATH}:/data/logs/puti
+      - ${PUTI_ROOT}${PUTI_DATA_PATH}:/data/puti
+      - ${PUTI_ROOT}${PUTI_LOG_PATH}:/data/logs/puti
     ports:
-      - "${PUTI_HTTP_PORT}:8000"
-      - "${PUTI_HTTPS_PORT}:8080"
+      - "${PUTI_HTTP_PORT}:${PUTI_HTTP_PORT_OUT}"
+      - "${PUTI_HTTPS_PORT}:${PUTI_HTTPS_PORT_OUT}"
     restart: always
     networks:
       - db
-      - web
     entrypoint: ["/usr/local/bin/wait-for-db.sh", "database:3306", "--", "docker-entrypoint.sh"]
     command: ["puti"]
 
 networks:
   db:
-  web:
-    
