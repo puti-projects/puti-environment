@@ -18,8 +18,8 @@ WORKSPACE_TIMEZONE=Asia/Shanghai
 PUTI_VERSION=latest
 PUTI_HTTP_PORT=8000
 PUTI_HTTPS_PORT=8080
-PUTI_HTTP_PORT_OUT=8000
-PUTI_HTTPS_PORT_OUT=8080
+PUTI_HTTP_PORT_OUT=80
+PUTI_HTTPS_PORT_OUT=443
 
 # Path for Puti logs; PUTI_ROOT will be added in front of it in the docker-compose file
 PUTI_LOG_PATH=/logs/puti
