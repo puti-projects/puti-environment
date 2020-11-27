@@ -35,8 +35,8 @@ services:
       - ${PUTI_ROOT}${PUTI_DATA_PATH}:/data/puti
       - ${PUTI_ROOT}${PUTI_LOG_PATH}:/data/logs/puti
     ports:
-      - "${PUTI_HTTP_PORT}:${PUTI_HTTP_PORT_OUT}"
-      - "${PUTI_HTTPS_PORT}:${PUTI_HTTPS_PORT_OUT}"
+      - "${PUTI_HTTP_PORT_OUT}:${PUTI_HTTP_PORT}"
+      - "${PUTI_HTTPS_PORT_OUT}:${PUTI_HTTPS_PORT}"
     restart: always
     networks:
       - db
