@@ -11,9 +11,10 @@ Puti environment solution
 ## Usage
 
 ### 1. 分支说明
-主分支（master）已经移除了 Nginx，现在只包含 Puti 和 一个 DB 容器构建。
+主分支（master）将维护一个包含 Nginx 的分支，包含 Nginx、Puti、DB 的构建。
 
-包含 Nginx 的移到了 `nginx` 分支。
+分支 `puti-db` 已经移除了 Nginx，只包含 Puti 和 一个 DB 容器的构建。
+
 
 ### 2. 安装 Docker，Docker-compose，Git
 
