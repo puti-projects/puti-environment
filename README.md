@@ -34,8 +34,14 @@ git clone https://github.com/puti-projects/puti-environment.git
 cd puti-environment
 cp env-example .env
 ```
+.env 为 puti-environment 项目搭建环境的配置，修改为你希望的配置即可。
 
-.env 为 puti-environment 项目搭建环境的配置，修改为你希望的配置即可。请将 Nginx 相关的配置文件放到配置的对应目录中，提供了参考配置。
+```sh
+cp nginx/config-example/ /data/nginx/config/
+```
+请将 Nginx 相关的配置文件放到配置的对应目录（例如此处为 `/data/nginx/config/`，根据自己的配置操作）中，提供了参考配置。
+
+然后就可以开始构建项目和运行服务了。
 
 ### 5. docker-compose 构建项目并运行服务
 
