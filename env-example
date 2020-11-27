@@ -69,5 +69,6 @@ NGINX_LOG_PATH=/logs/nginx
 
 # Path for nginx data; PUTI_ROOT will be added in front of it in the docker-compose file
 NGINX_CERT_PATH=/data/nginx/certs/
-NGINX_CONF_PATH=/data/nginx/config/
+NGINX_CONF_PATH=/data/nginx/config/nginx.conf
+NGINX_CONFD_PATH=/data/nginx/config/conf.d
 #######################################################################################

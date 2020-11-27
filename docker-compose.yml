@@ -37,8 +37,9 @@ services:
     environment:
       - TZ=${WORKSPACE_TIMEZONE}
     volumes:
-      - ${NGINX_CONF_PATH}:/etc/nginx
-      - ${NGINX_CERT_PATH}:/etc/nginx/certs
+      - ${PUTI_ROOT}${NGINX_CONF_PATH}:/etc/nginx/nginx.conf
+      - ${PUTI_ROOT}${NGINX_CONFD_PATH}:/etc/nginx/conf.d
+      - ${PUTI_ROOT}${NGINX_CERT_PATH}:/etc/nginx/certs
       - ${PUTI_ROOT}${NGINX_LOG_PATH}:/var/log/nginx
     ports:
       - "${NGINX_HOST_HTTP_PORT}:${NGINX_HTTP_PORT}"
