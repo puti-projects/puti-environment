@@ -3,10 +3,7 @@ FROM nginx:${NGINX_VERSION}
 
 LABEL maintainer="goozp <gzp@goozp.com>"
 
-COPY nginx.conf /etc/nginx/
-
 RUN adduser -u 1000 -D -S www-data -G www-data
-
 
 
 # Set Timezone
