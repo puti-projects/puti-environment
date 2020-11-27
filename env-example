@@ -1,20 +1,23 @@
-### Paths ###################################################################
+### Paths ############################################################################
 # Root path for the hole project; example: "/puti", "./puti", "~/puti", "./"
 PUTI_ROOT=/puti
 
-### Drivers ##################################################################
+### Drivers ###########################################################################
 # All volumes driver
 VOLUMES_DRIVER=local
 
 # All Networks driver
 NETWORKS_DRIVER=bridge
 
-
-### WORKSPACE ###############################################################
+### WORKSPACE #########################################################################
 WORKSPACE_TIMEZONE=Asia/Shanghai
+#######################################################################################
 
 
-### PUTI  ###################################################################
+
+### PUTI  #############################################################################
+PUTI_NAME=puti
+
 PUTI_VERSION=latest
 PUTI_HTTP_PORT=8000
 PUTI_HTTPS_PORT=8080
@@ -26,9 +29,13 @@ PUTI_LOG_PATH=/logs/puti
 
 # Path for Puti data; PUTI_ROOT will be added in front of it in the docker-compose file
 PUTI_DATA_PATH=/data/puti
+#######################################################################################
 
 
-### MYSQL ###################################################################
+
+### MYSQL #############################################################################
+MYSQL_NAME=puti-db
+
 MYSQL_VERSION=8.0
 MYSQL_DATABASE=db_puti
 MYSQL_USER=putiroot
@@ -44,4 +51,24 @@ MYSQL_DATA_PATH=/data/mysql
 
 # If the MYSQL_DATA_PATH is empty, the container will init the database using these sql file
 MYSQL_ENTRYPOINT_INITDB=./mysql/docker-entrypoint-initdb.d
+#######################################################################################
 
+
+
+### NGINX #############################################################################
+NGINX_NAME=puti-nginx
+
+NGINX_VERSION=stable-alpine
+NGINX_HOST_HTTP_PORT=80
+NGINX_HOST_HTTPS_PORT=443
+NGINX_HTTP_PORT=80
+NGINX_HTTPS_PORT=443
+
+# Path for nginx logs; PUTI_ROOT will be added in front of it in the docker-compose file
+NGINX_LOG_PATH=/logs/nginx
+
+# Path for nginx data; PUTI_ROOT will be added in front of it in the docker-compose file
+NGINX_CONF_PATH=/data/nginx/config/nginx.conf
+NGINX_CONFD_PATH=/data/nginx/config/conf.d
+NGINX_CERT_PATH=./data/nginx/certs/
+#######################################################################################
