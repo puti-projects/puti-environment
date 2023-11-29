@@ -26,6 +26,28 @@ services:
     entrypoint: ""
     command: bash -c "chown -R mysql:mysql /var/log/mysql && exec /entrypoint.sh mysqld"
 
+  nginx:
+    container_name: ${NGINX_NAME}
+    build: 
+      context: ./nginx
+      args:
+        - NGINX_VERSION=${NGINX_VERSION}
+    depends_on:
+      - puti
+    environment:
+      - TZ=${WORKSPACE_TIMEZONE}
+    volumes:
+      - ${PUTI_ROOT}${NGINX_CONF_PATH}:/etc/nginx/nginx.conf
+      - ${PUTI_ROOT}${NGINX_CONFD_PATH}:/etc/nginx/conf.d
+      - ${PUTI_ROOT}${NGINX_CERT_PATH}:/etc/nginx/certs
+      - ${PUTI_ROOT}${NGINX_LOG_PATH}:/var/log/nginx
+    ports:
+      - "${NGINX_HOST_HTTP_PORT}:${NGINX_HTTP_PORT}"
+      - "${NGINX_HOST_HTTPS_PORT}:${NGINX_HTTPS_PORT}"
+    restart: always
+    networks:
+      - web
+
   puti:
     container_name: ${PUTI_NAME}
     image: puti/puti:${PUTI_VERSION}
@@ -40,8 +62,10 @@ services:
     restart: always
     networks:
       - db
+      - web
     entrypoint: ["/usr/local/bin/wait-for-db.sh", "database:3306", "--", "docker-entrypoint.sh"]
     command: ["puti"]
 
 networks:
   db:
+  web:

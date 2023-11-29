@@ -11,10 +11,9 @@ Puti environment solution
 ## Usage
 
 ### 1. 分支说明
-主分支（master）将维护一个包含 Nginx 的分支，包含 Nginx、Puti、DB 的构建。
+`docker-compose-nginx.yml` 维护一个包含 Nginx 的分支，内含 Nginx、Puti、DB 的构建。而默认的 `docker-compose.yml` 不含 Nginx，对应 Puti 的最新版本是开启了自动 HTTPS，由 puti 直接暴漏服务。
 
-分支 `puti-db` 已经移除了 Nginx，只包含 Puti 和 一个 DB 容器的构建。
-
+当然，可以配置 Nginx，然后配置自动更新证书脚本也是可以的。
 
 ### 2. 安装 Docker，Docker-compose，Git
 
